@@ -38,6 +38,7 @@
     <Compile Include="Move.cs" />
     <Compile Include="NsliderGame.cs" />
     <Compile Include="SolutionNode.cs" />
+    <Compile Include="Solver.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
 </Project>

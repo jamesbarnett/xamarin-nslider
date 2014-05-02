@@ -7,7 +7,7 @@ namespace Game
 	public class SolutionNode
 	{
 		private SolutionNode _parent = null;
-		private Board _board = null;
+		private Board _current = null;
 		private Dictionary<Move, Board> _children = new Dictionary<Move, Board>();
 		
 		public Board Current { 
@@ -23,12 +23,12 @@ namespace Game
 		public SolutionNode(SolutionNode parent, Board board)
 		{
 			_parent = parent;
-			_board = board;
+			_current = board;
 		}
 		
 		public bool IsBoardMatch(Board b)
 		{
-			return _board.Equals (b);
+			return _current.Equals (b);
 		}
 	}
 }

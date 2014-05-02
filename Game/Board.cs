@@ -22,7 +22,8 @@ namespace Game
 		{
 			var moves = new List<Move>();
 			var gameStates = new List<Board>();
-			var legalMoves = Shuffle(LegalMoves());
+			var legalMoves = new List<Move>(LegalMoves());
+			ShuffleMoves(legalMoves);
 			Move moveToApply = null;
 			
 			gameStates.Add (this);
@@ -113,7 +114,7 @@ namespace Game
 			_grid[origin] = temp;
 		}
 		
-		private void Shuffle(List<Move> moves)
+		private void ShuffleMoves(List<Move> moves)
 		{
 			Random rng = new Random ();
 			int n = moves.Count;
