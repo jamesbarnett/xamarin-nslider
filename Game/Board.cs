@@ -5,16 +5,21 @@ namespace Game
 {
 	public class Board
 	{
-		private int _order;
 		private List<Tile> _grid = null;
+        public int Order { get; set; }
+        public List<Tile> Grid
+        {
+            get { return _grid; }
+            set { _grid = value; }
+        }
 
 		public Board(int order)
 		{
-			_order = order;
+			Order = order;
 
 			_grid = new List<Tile>();
 
-			for (int i = 0; i < _order; i++)
+			for (int i = 0; i < Order; i++)
 			{
 				_grid.Add(new Tile(i));
 			}
@@ -22,7 +27,7 @@ namespace Game
 
 		public Board(Board src)
 		{
-			_order = src._order;
+			Order = src.Order;
 			_grid = new List<Tile>();
 
 			foreach (var tile in src._grid)
@@ -70,7 +75,7 @@ namespace Game
 			switch (move.Direction) 
 			{
 			case Move.Moves.Up:
-				SwapTiles(pos - _order, pos);
+				SwapTiles(pos - Order, pos);
 				break;
 				
 			case Move.Moves.Left:
@@ -78,7 +83,7 @@ namespace Game
 				break;
 				
 			case Move.Moves.Down:
-				SwapTiles(pos + _order, pos);
+				SwapTiles(pos + Order, pos);
 				break;
 				
 			case Move.Moves.Right:
@@ -97,7 +102,7 @@ namespace Game
 			/* This code should work, appears to be a bug in Xamarin Studio
 			return _grid.FindIndex(x => x.Position == 0);
 			*/
-			for (int i = 0; i < _order * _order; i++)
+			for (int i = 0; i < Order * Order; i++)
 			{
 				if (_grid[i].Position == 0)
 					return i;
@@ -112,13 +117,32 @@ namespace Game
 		
 			int pos = FindEmptyTile();
 			
-			if (pos >= _order) legal.Add(new Move(Move.Moves.Up));
-			if (pos % _order != 0) legal.Add(new Move(Move.Moves.Left));
-			if (pos % _order != _order - 1) legal.Add(new Move(Move.Moves.Right));
-			if (pos < _order * _order - _order) legal.Add(new Move(Move.Moves.Down));
+			if (pos >= Order) legal.Add(new Move(Move.Moves.Up));
+			if (pos % Order != 0) legal.Add(new Move(Move.Moves.Left));
+			if (pos % Order != Order - 1) legal.Add(new Move(Move.Moves.Right));
+			if (pos < Order * Order - Order) legal.Add(new Move(Move.Moves.Down));
 			
 			return legal;
 		}
+
+        public override bool Equals(object obj)
+        {
+            var rhs = (Board)obj;
+
+            if (Order == rhs.Order)
+            {
+                for (int i = 0; i < Grid.Count; i++)
+                {
+                    if (Grid[i].Equals(rhs.Grid[i])) return false;
+                }
+
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
 		
 		private void SwapTiles(int origin, int destination)
 		{

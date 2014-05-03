@@ -11,6 +11,12 @@ namespace Game
 		{
 			Direction = direction;
 		}
+
+        public override bool Equals(object obj)
+        {
+            var rhs = (Move)obj;
+            return Direction == rhs.Direction;
+        }
 	}
 }
 

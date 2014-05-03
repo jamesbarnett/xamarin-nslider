@@ -17,7 +17,7 @@ namespace Game
 		public List<Move> Solution()
 		{
 			var root = new SolutionNode(null, Game.Current);
-			if (Game.Current == Game.Solved)
+			if (Game.Current.Equals(Game.Solved))
 			{
 				var moves = new List<Move>();
 				moves.Add(new Move(Move.Moves.Start));
@@ -40,7 +40,7 @@ namespace Game
 				var node = new SolutionNode(root, board);
 				root.Children.Add(move, node);
 
-				if (board == Game.Solved)
+				if (board.Equals(Game.Solved))
 				{
 					var n = new Tuple<SolutionNode, Move>(node, move);
 					visited.Add(n);
@@ -65,7 +65,7 @@ namespace Game
 			{
 				Tuple<SolutionNode, Move> node = nodeQueue.Dequeue ();
 				
-				if (node.Item1.Current == Game.Solved)
+				if (node.Item1.Current.Equals(Game.Solved))
 				{
 					visited.Add(node);
 					return SolutionPath(node, visited);
@@ -78,18 +78,19 @@ namespace Game
 		public List<Move> SolutionPath(Tuple<SolutionNode, Move> solution,
 		                               List<Tuple<SolutionNode, Move>> visited)
 		{
-			var moves = new List<Move> ();
-			var node = new Tuple<SolutionNode, Move> (solution.Item1, solution.Item2);
+			var moves = new List<Move>();
+			var node = new Tuple<SolutionNode, Move>(solution.Item1, solution.Item2);
 			
-			moves.Add (solution.Item2);
+			moves.Add(solution.Item2);
 			
-			while (node.Item1.Parent != null) {
+			while (node.Item1.Parent != null)
+            {
 				Tuple<SolutionNode, Move> nextChild = null;
 				
 				for (int i = 0; i < visited.Count; ++i) {
 					nextChild = visited [i];
 					
-					if (nextChild.Item1 == node.Item1.Parent) {
+					if (nextChild.Item1.Equals(node.Item1.Parent)) {
 						node = nextChild;
 						break;
 					}

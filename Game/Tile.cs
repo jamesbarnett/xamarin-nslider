@@ -15,6 +15,12 @@ namespace Game
 		{
 			this.Position = src.Position;
 		}
+
+        public override bool Equals(object obj)
+        {
+            var rhs = (Tile)obj;
+            return Position == rhs.Position;
+        }
 	}
 }
 

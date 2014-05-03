@@ -10,17 +10,20 @@ namespace Game
 		private Board _current = null;
 		private Dictionary<Move, SolutionNode> _children = new Dictionary<Move, SolutionNode>();
 		
-		public Board Current { 
+		public Board Current
+        { 
 			get { return _current; }
 			set { _current = value; }
 		}
 		
-		public SolutionNode Parent {
+		public SolutionNode Parent
+        {
 			get { return _parent; }
 			set { _parent = value; }
 		}
 
-		public Dictionary<Move, SolutionNode> Children {
+		public Dictionary<Move, SolutionNode> Children
+        {
 			get { return _children; }
 			set { _children = value; }
 		}
@@ -35,6 +38,13 @@ namespace Game
 		{
 			return _current.Equals (b);
 		}
+
+        /*public override bool Equals(object obj)
+        {
+            var rhs = (SolutionNode)obj;
+            
+
+        }*/
 	}
 }
 
