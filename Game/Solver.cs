@@ -8,20 +8,58 @@ namespace Game
 {
 	public class Solver
 	{
-		public NsliderGame Game { get; set; }
-		public Solver(NsliderGame game)
+		public Puzzle Game { get; set; }
+		public Solver(Puzzle game)
 		{
 			Game = game;
 		}
 		
 		public List<Move> Solution()
 		{
-			return new List<Move>();
+			var root = new SolutionNode(null, Game.Current);
+			if (Game.Current == Game.Solved)
+			{
+				var moves = new List<Move>();
+				moves.Add(new Move(Move.Moves.Start));
+				return moves;
+			}
+
+			var legalMoves = Game.Current.LegalMoves();
+			var visited = new List<Tuple<SolutionNode, Move>>();
+
+			visited.Add(new Tuple<SolutionNode, Move>(root,
+				new Move(Move.Moves.Start)));
+
+			var nodeQueue = new Queue<Tuple<SolutionNode, Move>>();
+
+			foreach (var move in legalMoves)
+			{
+				var board = new Board(Game.Current);
+				board.ApplyMove(move);
+
+				var node = new SolutionNode(root, board);
+				root.Children.Add(move, node);
+
+				if (board == Game.Solved)
+				{
+					var n = new Tuple<SolutionNode, Move>(node, move);
+					visited.Add(n);
+					return SolutionPath(n, visited);
+				}
+				else
+				{
+					nodeQueue.Enqueue(
+						new Tuple<SolutionNode, Move>(node, move));
+				}
+			}
+
+			return BreadthFirstSearch(nodeQueue, visited);
 		}
 		
-		public List<Move> BreadFirstSearch (
+		public List<Move> BreadthFirstSearch(
 			Queue<Tuple<SolutionNode, Move>> nodeQueue,
-			List<Tuple<SolutionNode, Move>> visited)
+			List<Tuple<SolutionNode, Move>> visited
+		)
 		{
 			while (nodeQueue.Count > 0)
 			{
@@ -40,13 +78,24 @@ namespace Game
 		public List<Move> SolutionPath(Tuple<SolutionNode, Move> solution,
 		                               List<Tuple<SolutionNode, Move>> visited)
 		{
-			var moves = new List<Move>();
-			var node = new Tuple<SolutionNode, Move>(solution.Item1, solution.Item2);
+			var moves = new List<Move> ();
+			var node = new Tuple<SolutionNode, Move> (solution.Item1, solution.Item2);
 			
 			moves.Add (solution.Item2);
 			
 			while (node.Item1.Parent != null) {
-				node = visited.Find(m => m.Item1 == node.Item1.Parent);
+				Tuple<SolutionNode, Move> nextChild = null;
+				
+				for (int i = 0; i < visited.Count; ++i) {
+					nextChild = visited [i];
+					
+					if (nextChild.Item1 == node.Item1.Parent) {
+						node = nextChild;
+						break;
+					}
+				}
+				
+				// node = visited.Find(m => m.Item1 == node.Item1.Parent);
 				
 				if (node != null) {
 					moves.Add(node.Item2);

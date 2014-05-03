@@ -8,7 +8,7 @@ namespace Game
 	{
 		private SolutionNode _parent = null;
 		private Board _current = null;
-		private Dictionary<Move, Board> _children = new Dictionary<Move, Board>();
+		private Dictionary<Move, SolutionNode> _children = new Dictionary<Move, SolutionNode>();
 		
 		public Board Current { 
 			get { return _current; }
@@ -19,7 +19,12 @@ namespace Game
 			get { return _parent; }
 			set { _parent = value; }
 		}
-		
+
+		public Dictionary<Move, SolutionNode> Children {
+			get { return _children; }
+			set { _children = value; }
+		}
+
 		public SolutionNode(SolutionNode parent, Board board)
 		{
 			_parent = parent;

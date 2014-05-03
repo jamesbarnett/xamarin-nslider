@@ -10,6 +10,11 @@ namespace Game
 		{
 			Position = position;
 		}
+
+		public Tile(Tile src)
+		{
+			this.Position = src.Position;
+		}
 	}
 }
 

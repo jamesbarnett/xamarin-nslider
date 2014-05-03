@@ -11,10 +11,23 @@ namespace Game
 		public Board(int order)
 		{
 			_order = order;
-			
+
+			_grid = new List<Tile>();
+
 			for (int i = 0; i < _order; i++)
 			{
 				_grid.Add(new Tile(i));
+			}
+		}
+
+		public Board(Board src)
+		{
+			_order = src._order;
+			_grid = new List<Tile>();
+
+			foreach (var tile in src._grid)
+			{
+				_grid.Add(new Tile(tile));
 			}
 		}
 
@@ -122,10 +135,10 @@ namespace Game
 			while (n > 1)
 			{
 				n--;
-				int k = rng.Next (n + 1);
-				Move m = moves [k];
-				moves [k] = moves [n];
-				moves [n] = m;
+				int k = rng.Next(n + 1);
+				Move m = moves[k];
+				moves[k] = moves[n];
+				moves[n] = m;
 			}
 		}
 	}
