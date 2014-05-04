@@ -17,6 +17,38 @@ namespace Game
             var rhs = (Move)obj;
             return Direction == rhs.Direction;
         }
+
+		public string ToString()
+		{
+			var str = "";
+
+			switch (Direction)
+			{
+			case Moves.Up:
+				str = "UP";
+				break;
+			case Moves.Left:
+				str = "LEFT";
+				break;
+			case Moves.Down:
+				str = "DOWN";
+				break;
+			case Moves.Right:
+				str = "RIGHT";
+				break;
+			case Moves.Start:
+				str = "START";
+				break;
+			case Moves.Solved:
+				str = "SOLVED";
+				break;
+			default:
+				str = "UNKNOWN MOVE!";
+				break;
+			}
+
+			return str;
+		}
 	}
 }
 

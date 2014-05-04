@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Text;
 
 namespace Game
 {
@@ -144,6 +145,14 @@ namespace Game
             }
         }
 		
+		public string ToString()
+		{
+			var buffer = new StringBuilder();
+			buffer.AppendFormat("Board -- Order: {0}\n", Order);
+
+			return buffer.ToString();
+		}
+
 		private void SwapTiles(int origin, int destination)
 		{
 			Tile temp = _grid[origin];

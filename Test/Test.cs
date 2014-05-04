@@ -16,7 +16,7 @@ namespace Test
 			
 			foreach (var step in solution)
             {
-				Console.WriteLine(string.Format("Step is #{0}", step));
+				Console.WriteLine(string.Format("Step is #{0}", step.Direction));
 			}
 		}
 	}

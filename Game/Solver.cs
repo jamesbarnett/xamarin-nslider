@@ -95,12 +95,16 @@ namespace Game
 						break;
 					}
 				}
-				
+
+				// Hitting the same PCL bug again I think
 				// node = visited.Find(m => m.Item1 == node.Item1.Parent);
 				
-				if (node != null) {
+				if (node != null)
+				{
 					moves.Add(node.Item2);
-				} else {
+				}
+				else 
+				{
 					throw new Exception("Didn't find node");
 				}
 			}
