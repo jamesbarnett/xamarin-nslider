@@ -21,7 +21,7 @@ namespace Game
 
 			_grid = new List<Tile>();
 
-			for (int i = 0; i < Order; i++)
+			for (int i = 0; i < Order * Order; i++)
 			{
 				_grid.Add(new Tile(i));
 			}
@@ -46,7 +46,7 @@ namespace Game
 			ShuffleMoves(legalMoves);
 			Move moveToApply = null;
 			
-			gameStates.Add (this);
+			gameStates.Add(this);
 			
 			for (int i = 0; i < count; i++) 
 			{
@@ -55,7 +55,18 @@ namespace Game
 					Board board = new Board(this);
 					board.ApplyMove(move);
 					
-					if (!gameStates.Contains (board))
+					bool hasBoard = false;
+
+					foreach (var gameState in gameStates)
+					{
+						if (gameState.IsSameBoard(board))
+						{
+							hasBoard = true;
+							break;
+						}
+					}
+
+					if (hasBoard)
 					{
 						gameStates.Add(board);
 						moveToApply = move;
