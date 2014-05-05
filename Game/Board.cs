@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 
 namespace Game
@@ -51,8 +52,8 @@ namespace Game
 			{
 				foreach (var move in legalMoves) 
 				{
-					Board board = (Board)this.MemberwiseClone ();
-					board.ApplyMove (move);
+					Board board = new Board(this);
+					board.ApplyMove(move);
 					
 					if (!gameStates.Contains (board))
 					{
@@ -72,7 +73,8 @@ namespace Game
 		public void ApplyMove(Move move)
 		{
 			int pos = FindEmptyTile();
-			
+		
+			// Debug.WriteLine(string.Format("ApplyMove: move is {0}", move.ToString()));
 			switch (move.Direction) 
 			{
 			case Move.Moves.Up:
@@ -126,15 +128,13 @@ namespace Game
 			return legal;
 		}
 
-        public override bool Equals(object obj)
+		public bool IsSameBoard(Board rhs)
         {
-            var rhs = (Board)obj;
-
             if (Order == rhs.Order)
             {
                 for (int i = 0; i < Grid.Count; i++)
                 {
-                    if (Grid[i].Equals(rhs.Grid[i])) return false;
+					if (!Grid[i].IsSameTile(rhs.Grid[i])) return false;
                 }
 
                 return true;
@@ -145,7 +145,7 @@ namespace Game
             }
         }
 		
-		public string ToString()
+		public override string ToString()
 		{
 			var buffer = new StringBuilder();
 			buffer.AppendFormat("Board -- Order: {0}\n", Order);

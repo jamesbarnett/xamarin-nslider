@@ -2,7 +2,7 @@ using System;
 
 namespace Game
 {
-	public class Tile
+	public class Tile : Object
 	{
 		public int Position { get; set; }
 
@@ -16,9 +16,8 @@ namespace Game
 			this.Position = src.Position;
 		}
 
-        public override bool Equals(object obj)
+		public bool IsSameTile(Tile rhs)
         {
-            var rhs = (Tile)obj;
             return Position == rhs.Position;
         }
 	}

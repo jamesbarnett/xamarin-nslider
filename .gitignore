@@ -1,3 +1,5 @@
 *.userprefs
 Game/bin/*
 Game/obj/*
+Test/bin/*
+Test/obj/*

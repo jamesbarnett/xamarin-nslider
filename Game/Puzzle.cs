@@ -6,12 +6,11 @@ namespace Game
 	{
 		public Board Current { get; set; }
 		public Board Solved { get; set; }
-		public int Order { get; set; }
 		
 		public Puzzle(int order, int shuffleMoves = 10)
 		{
-			Current = Solved = new Board(order);
-			Order = order;
+			Solved = new Board(order);
+			Current = new Board(Solved);
 			Current.Shuffle(shuffleMoves);
 		}
 	}

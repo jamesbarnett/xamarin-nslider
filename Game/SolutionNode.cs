@@ -33,18 +33,6 @@ namespace Game
 			_parent = parent;
 			_current = board;
 		}
-		
-		public bool IsBoardMatch(Board b)
-		{
-			return _current.Equals (b);
-		}
-
-        /*public override bool Equals(object obj)
-        {
-            var rhs = (SolutionNode)obj;
-            
-
-        }*/
 	}
 }
 

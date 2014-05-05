@@ -17,7 +17,7 @@ namespace Game
 		public List<Move> Solution()
 		{
 			var root = new SolutionNode(null, Game.Current);
-			if (Game.Current.Equals(Game.Solved))
+			if (Game.Current.IsSameBoard(Game.Solved))
 			{
 				var moves = new List<Move>();
 				moves.Add(new Move(Move.Moves.Start));
@@ -40,7 +40,7 @@ namespace Game
 				var node = new SolutionNode(root, board);
 				root.Children.Add(move, node);
 
-				if (board.Equals(Game.Solved))
+				if (board.IsSameBoard(Game.Solved))
 				{
 					var n = new Tuple<SolutionNode, Move>(node, move);
 					visited.Add(n);
@@ -65,7 +65,7 @@ namespace Game
 			{
 				Tuple<SolutionNode, Move> node = nodeQueue.Dequeue ();
 				
-				if (node.Item1.Current.Equals(Game.Solved))
+				if (node.Item1.Current.IsSameBoard(Game.Solved))
 				{
 					visited.Add(node);
 					return SolutionPath(node, visited);
@@ -87,16 +87,18 @@ namespace Game
             {
 				Tuple<SolutionNode, Move> nextChild = null;
 				
-				for (int i = 0; i < visited.Count; ++i) {
+				for (int i = 0; i < visited.Count; ++i)
+				{
 					nextChild = visited [i];
 					
-					if (nextChild.Item1.Equals(node.Item1.Parent)) {
+					if (nextChild.Item1.Current.IsSameBoard(node.Item1.Parent.Current))
+					{
 						node = nextChild;
 						break;
 					}
 				}
 
-				// Hitting the same PCL bug again I think
+				// Hitting the same PCL bug again, I think
 				// node = visited.Find(m => m.Item1 == node.Item1.Parent);
 				
 				if (node != null)
